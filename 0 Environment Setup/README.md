@@ -64,7 +64,7 @@ Then click the **Review + Create** button to deploy the resources and it may tak
 
 Once the deployment process finishes, the resources will be created as following:
 
-![List of the resources by the template](../media/resource-list)
+![List of the resources by the template](../media/resource-list.png)
 
 You can login to the server using Azure bastion to confirm that the VM instance is running. Click the **Tool Client** VM and select **Connect** -> **Bastion**. You will be prompted into filling out login credentials and then clicking the **Connect** button to establish a web browser based RDP connection to the VM.
 
