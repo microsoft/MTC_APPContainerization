@@ -55,15 +55,15 @@ Unzip the *appfiles.zip* file in the same folder of this repository, open the *W
     <add name="app2containerdemostr" connectionString="YOUR CONNECTION STRING" />
   </connectionStrings>
 ```
-![Obtain the sql database connection string](./media/db-connectionstring.png)
+![Obtain the sql database connection string](../media/db-connectionstring.png)
 
 To deploy a sample ASP.NET application on the server, login to the windows application server created during the environment setup using Azure bastion. Once logged into the server, go to **Computer Management** -> **Services and Applications** -> **Internet Information Services Manager**. In the panel, under the **Sites**, right click **Add Website**.
 
-![Deploy ASP.NET application on the server](./media/aspnet-publish.png)
+![Deploy ASP.NET application on the server](../media/aspnet-publish.png)
 
 Paste all the unzipped application files into a specific folder on the application server and specify the folder in the *Physical path*. Name the site and click *OK* to publish the application on the server. To verify the application has been successfully deployed, go to http://localhost:80 and in the *About* tab you will be able to see the databases that the server the application connected to.
 
-![Verify the ASP.NET application is running on the server](./media/running-aspapplication.png)
+![Verify the ASP.NET application is running on the server](../media/running-aspapplication.png)
 
 ## Log in to Azure
 

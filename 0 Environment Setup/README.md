@@ -50,13 +50,13 @@ In this section, you deploy the ARM template designed for this workshop, includi
 
 To deploy the ARM template, log into the [Azure portal](https://portal.azure.com) using the account you have set up in the previous section. Then create a resource group within the subscription you choose and keep a note on the region that you choose to create the resource group. It is recommended to choose the region that is closest to you geographic area to keep the network latency minimal. Once you have created the resource group, click into the resource group and the **Add** button on the top left tab. Choose the **Custom Deployment** option. Once going into the **Custom Deployment** page, choose **Build your own template in the editor**. Paste the **template.json** file into the editor and click the *save* button. 
 
-![Import provisioned ARM template for the deployment](./media/import-ARM-template.png)
+![Import provisioned ARM template for the deployment](../media/import-ARM-template.png)
 
 In the next page, edit the items for a few parameters for the deployment, including VM password, SQL Server name and password etc.
 
 *Note: To avoid name conflict of the globally unique Azure SQL server names, try to attach a random number to the end of the string*
 
-![Edit parameters for the ARM template](./media/ARM-template-parameter.png)
+![Edit parameters for the ARM template](../media/ARM-template-parameter.png)
 
 Then click the **Review + Create** button to deploy the resources and it may take *15 minutes* to finish the deployment process.
 
@@ -64,9 +64,9 @@ Then click the **Review + Create** button to deploy the resources and it may tak
 
 Once the deployment process finishes, the resources will be created as following:
 
-![List of the resources by the template](./media/resource-list.png)
+![List of the resources by the template](../media/resource-list)
 
 You can login to the server using Azure bastion to confirm that the VM instance is running. Click the **Tool Client** VM and select **Connect** -> **Bastion**. You will be prompted into filling out login credentials and then clicking the **Connect** button to establish a web browser based RDP connection to the VM.
 
-![Login to VM using bastion](./media/bastion-login.png)
+![Login to VM using bastion](../media/bastion-login.png)
 
