@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceLocation": {
+            "value": null
+        },
+        "osPassword": {
+            "value": null
+        },
+        "sqlPassword": {
+            "value": null
+        },
+        "bastionHosts_bastion_name": {
+            "value": null
+        },
+        "servers_app2continer_demo_name": {
+            "value": null
+        },
+        "virtualNetworks_app2container_vnet_name": {
+            "value": null
+        },
+        "virtualMachines_app2container_aspserver_name": {
+            "value": null
+        },
+        "publicIPAddresses_app2container_vnet_ip_name": {
+            "value": null
+        },
+        "virtualMachines_app2container_toolclient_name": {
+            "value": null
+        },
+        "networkInterfaces_app2container_aspser291_name": {
+            "value": null
+        },
+        "networkInterfaces_app2container_toolcl155_name": {
+            "value": null
+        },
+        "publicIPAddresses_app2container_aspserver_ip_name": {
+            "value": null
+        },
+        "publicIPAddresses_app2container_toolclient_ip_name": {
+            "value": null
+        },
+        "networkSecurityGroups_app2container_aspserver_nsg_name": {
+            "value": null
+        },
+        "networkSecurityGroups_app2container_toolclient_nsg_name": {
+            "value": null
+        }
+    }
+}
