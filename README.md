@@ -1,4 +1,4 @@
-# APP2Container Workshop - Microsoft Technology Centers
+# APP Containerization Workshop - Microsoft Technology Centers
 
 The Azure app containerization tool is a new feature rolled out from [Azure Migrate](https://docs.microsoft.com/en-us/azure/migrate/migrate-services-overview), which helps containerize applications and run them in Azure Kubernetes Service (AKS). The tool works by using the running state of the applications on an application server to determine the application components and help package them in a container image. The tool itself doesn't require access to the codebase and provides an easy way to containerize existing application.
 

@@ -18,48 +18,48 @@
             "defaultValue": "bastion-89757",
             "type": "String"
         },
-        "servers_app2continer_demo_name": {
-            "defaultValue": "app2continer-demo",
+        "servers_appcontainerization_demo_name": {
+            "defaultValue": "appcontainerization-demo",
             "type": "String"
         },
-        "virtualNetworks_app2container_vnet_name": {
-            "defaultValue": "app2container-vnet",
+        "virtualNetworks_appcontainerization_vnet_name": {
+            "defaultValue": "appcontainerization-vnet",
             "type": "String"
         },
-        "virtualMachines_app2container_aspserver_name": {
-            "defaultValue": "app2container-aspserver",
+        "virtualMachines_appcontainerization_aspserver_name": {
+            "defaultValue": "vm-aspserver",
             "type": "String"
         },
-        "publicIPAddresses_app2container_vnet_ip_name": {
-            "defaultValue": "app2container-vnet-ip",
+        "publicIPAddresses_appcontainerization_vnet_ip_name": {
+            "defaultValue": "appcontainerization-vnet-ip",
             "type": "String"
         },
-        "virtualMachines_app2container_toolclient_name": {
-            "defaultValue": "app2container-toolclient",
+        "virtualMachines_appcontainerization_toolclient_name": {
+            "defaultValue": "vm-toolclient",
             "type": "String"
         },
-        "networkInterfaces_app2container_aspser291_name": {
-            "defaultValue": "app2container-aspser291",
+        "networkInterfaces_appcontainerization_aspser291_name": {
+            "defaultValue": "appcontainerization-aspser291",
             "type": "String"
         },
-        "networkInterfaces_app2container_toolcl155_name": {
-            "defaultValue": "app2container-toolcl155",
+        "networkInterfaces_appcontainerization_toolcl155_name": {
+            "defaultValue": "appcontainerization-toolcl155",
             "type": "String"
         },
-        "publicIPAddresses_app2container_aspserver_ip_name": {
-            "defaultValue": "app2container-aspserver-ip",
+        "publicIPAddresses_appcontainerization_aspserver_ip_name": {
+            "defaultValue": "appcontainerization-aspserver-ip",
             "type": "String"
         },
-        "publicIPAddresses_app2container_toolclient_ip_name": {
-            "defaultValue": "app2container-toolclient-ip",
+        "publicIPAddresses_appcontainerization_toolclient_ip_name": {
+            "defaultValue": "appcontainerization-toolclient-ip",
             "type": "String"
         },
-        "networkSecurityGroups_app2container_aspserver_nsg_name": {
-            "defaultValue": "app2container-aspserver-nsg",
+        "networkSecurityGroups_appcontainerization_aspserver_nsg_name": {
+            "defaultValue": "appcontainerization-aspserver-nsg",
             "type": "String"
         },
-        "networkSecurityGroups_app2container_toolclient_nsg_name": {
-            "defaultValue": "app2container-toolclient-nsg",
+        "networkSecurityGroups_appcontainerization_toolclient_nsg_name": {
+            "defaultValue": "appcontainerization-toolclient-nsg",
             "type": "String"
         }
     },
@@ -68,7 +68,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkSecurityGroups_app2container_aspserver_nsg_name')]",
+            "name": "[parameters('networkSecurityGroups_appcontainerization_aspserver_nsg_name')]",
             "location": "[parameters('resourceLocation')]",
             "properties": {
                 "securityRules": [
@@ -95,7 +95,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkSecurityGroups_app2container_toolclient_nsg_name')]",
+            "name": "[parameters('networkSecurityGroups_appcontainerization_toolclient_nsg_name')]",
             "location": "[parameters('resourceLocation')]",
             "properties": {
                 "securityRules": []
@@ -104,7 +104,7 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('publicIPAddresses_app2container_aspserver_ip_name')]",
+            "name": "[parameters('publicIPAddresses_appcontainerization_aspserver_ip_name')]",
             "location": "[parameters('resourceLocation')]",
             "sku": {
                 "name": "Basic",
@@ -120,7 +120,7 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('publicIPAddresses_app2container_toolclient_ip_name')]",
+            "name": "[parameters('publicIPAddresses_appcontainerization_toolclient_ip_name')]",
             "location": "[parameters('resourceLocation')]",
             "sku": {
                 "name": "Basic",
@@ -136,7 +136,7 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('publicIPAddresses_app2container_vnet_ip_name')]",
+            "name": "[parameters('publicIPAddresses_appcontainerization_vnet_ip_name')]",
             "location": "[parameters('resourceLocation')]",
             "sku": {
                 "name": "Standard",
@@ -152,7 +152,7 @@
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('virtualNetworks_app2container_vnet_name')]",
+            "name": "[parameters('virtualNetworks_appcontainerization_vnet_name')]",
             "location": "[parameters('resourceLocation')]",
             "properties": {
                 "addressSpace": {
@@ -189,7 +189,7 @@
         {
             "type": "Microsoft.Sql/servers",
             "apiVersion": "2020-11-01-preview",
-            "name": "[parameters('servers_app2continer_demo_name')]",
+            "name": "[parameters('servers_appcontainerization_demo_name')]",
             "location": "[parameters('resourceLocation')]",
             "kind": "v12.0",
             "properties": {
@@ -202,10 +202,10 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2020-12-01",
-            "name": "[parameters('virtualMachines_app2container_aspserver_name')]",
+            "name": "[parameters('virtualMachines_appcontainerization_aspserver_name')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app2container_aspser291_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_appcontainerization_aspser291_name'))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -220,7 +220,7 @@
                     },
                     "osDisk": {
                         "osType": "Windows",
-                        "name": "[concat(parameters('virtualMachines_app2container_aspserver_name'), '_disk1_76a963d50a3f46c0b0715f828b4a7c4e')]",
+                        "name": "[concat(parameters('virtualMachines_appcontainerization_aspserver_name'), '_disk1_76a963d50a3f46c0b0715f828b4a7c4e')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -231,7 +231,7 @@
                     "dataDisks": [
                         {
                             "lun": 0,
-                            "name": "[concat(parameters('virtualMachines_app2container_aspserver_name'), '_DataDisk_0')]",
+                            "name": "[concat(parameters('virtualMachines_appcontainerization_aspserver_name'), '_DataDisk_0')]",
                             "createOption": "Empty",
                             "caching": "None",
                             "writeAcceleratorEnabled": false,
@@ -244,7 +244,7 @@
                     ]
                 },
                 "osProfile": {
-                    "computerName": "app2container-a",
+                    "computerName": "aspserver",
                     "adminUsername": "appadmin",
                     "adminPassword": "[parameters('osPassword')]",
                     "windowsConfiguration": {
@@ -261,7 +261,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app2container_aspser291_name'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_appcontainerization_aspser291_name'))]"
                         }
                     ]
                 },
@@ -275,10 +275,10 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2020-12-01",
-            "name": "[parameters('virtualMachines_app2container_toolclient_name')]",
+            "name": "[parameters('virtualMachines_appcontainerization_toolclient_name')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app2container_toolcl155_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_appcontainerization_toolcl155_name'))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -293,7 +293,7 @@
                     },
                     "osDisk": {
                         "osType": "Windows",
-                        "name": "[concat(parameters('virtualMachines_app2container_toolclient_name'), '_OsDisk_1_f8ecd33591214460b39574be24c69583')]",
+                        "name": "[concat(parameters('virtualMachines_appcontainerization_toolclient_name'), '_OsDisk_1_f8ecd33591214460b39574be24c69583')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -304,7 +304,7 @@
                     "dataDisks": [
                         {
                             "lun": 1,
-                            "name": "[concat(parameters('virtualMachines_app2container_toolclient_name'), '_DataDisk_1')]",
+                            "name": "[concat(parameters('virtualMachines_appcontainerization_toolclient_name'), '_DataDisk_1')]",
                             "createOption": "Empty",
                             "caching": "None",
                             "writeAcceleratorEnabled": false,
@@ -317,7 +317,7 @@
                     ]
                 },
                 "osProfile": {
-                    "computerName": "app2container-t",
+                    "computerName": "toolclient",
                     "adminUsername": "toolclient",
                     "adminPassword": "[parameters('osPassword')]",
                     "windowsConfiguration": {
@@ -334,7 +334,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_app2container_toolcl155_name'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_appcontainerization_toolcl155_name'))]"
                         }
                     ]
                 },
@@ -348,9 +348,9 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('networkSecurityGroups_app2container_aspserver_nsg_name'), '/Port_8080')]",
+            "name": "[concat(parameters('networkSecurityGroups_appcontainerization_aspserver_nsg_name'), '/Port_8080')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_app2container_aspserver_nsg_name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_appcontainerization_aspserver_nsg_name'))]"
             ],
             "properties": {
                 "protocol": "TCP",
@@ -370,9 +370,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('virtualNetworks_app2container_vnet_name'), '/AzureBastionSubnet')]",
+            "name": "[concat(parameters('virtualNetworks_appcontainerization_vnet_name'), '/AzureBastionSubnet')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_app2container_vnet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_appcontainerization_vnet_name'))]"
             ],
             "properties": {
                 "addressPrefix": "10.0.1.0/24",
@@ -385,9 +385,9 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('virtualNetworks_app2container_vnet_name'), '/default')]",
+            "name": "[concat(parameters('virtualNetworks_appcontainerization_vnet_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_app2container_vnet_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_appcontainerization_vnet_name'))]"
             ],
             "properties": {
                 "addressPrefix": "10.0.0.0/24",
@@ -399,9 +399,9 @@
         {
             "type": "Microsoft.Sql/servers/advisors",
             "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/ForceLastGoodPlan')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/ForceLastGoodPlan')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "properties": {
                 "autoExecuteValue": "Enabled"
@@ -410,10 +410,10 @@
         {
             "type": "Microsoft.Sql/servers/databases",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/demo-db')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "sku": {
                 "name": "GP_Gen5",
@@ -435,9 +435,9 @@
         {
             "type": "Microsoft.Sql/servers/encryptionProtector",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/current')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/current')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "kind": "servicemanaged",
             "properties": {
@@ -449,9 +449,9 @@
         {
             "type": "Microsoft.Sql/servers/firewallRules",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/AllowAllWindowsAzureIps')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/AllowAllWindowsAzureIps')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "properties": {
                 "startIpAddress": "0.0.0.0",
@@ -461,9 +461,9 @@
         {
             "type": "Microsoft.Sql/servers/firewallRules",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/development')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/development')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "properties": {
                 "startIpAddress": "0.0.0.0",
@@ -476,8 +476,8 @@
             "name": "[parameters('bastionHosts_bastion_name')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_app2container_vnet_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_app2container_vnet_name'), 'AzureBastionSubnet')]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_vnet_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_appcontainerization_vnet_name'), 'AzureBastionSubnet')]"
             ],
             "sku": {
                 "name": "Basic"
@@ -490,10 +490,10 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_app2container_vnet_ip_name'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_vnet_ip_name'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_app2container_vnet_name'), 'AzureBastionSubnet')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_appcontainerization_vnet_name'), 'AzureBastionSubnet')]"
                             }
                         }
                     }
@@ -503,10 +503,10 @@
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
             "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/demo-db/ForceLastGoodPlan')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db/ForceLastGoodPlan')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_app2continer_demo_name'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_appcontainerization_demo_name'), 'demo-db')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "properties": {
                 "autoExecuteValue": "Enabled"
@@ -515,10 +515,10 @@
         {
             "type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/demo-db/default')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_app2continer_demo_name'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_appcontainerization_demo_name'), 'demo-db')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "properties": {
                 "retentionDays": 7
@@ -527,11 +527,11 @@
         {
             "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
             "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_app2continer_demo_name'), '/demo-db/Default')]",
+            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db/Default')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_app2continer_demo_name'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_app2continer_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_appcontainerization_demo_name'), 'demo-db')]",
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
             ],
             "properties": {
                 "state": "Enabled"
@@ -540,12 +540,12 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkInterfaces_app2container_aspser291_name')]",
+            "name": "[parameters('networkInterfaces_appcontainerization_aspser291_name')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_app2container_aspserver_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_app2container_vnet_name'), 'default')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_app2container_aspserver_nsg_name'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_aspserver_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_appcontainerization_vnet_name'), 'default')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_appcontainerization_aspserver_nsg_name'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -555,10 +555,10 @@
                             "privateIPAddress": "10.0.0.5",
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_app2container_aspserver_ip_name'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_aspserver_ip_name'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_app2container_vnet_name'), 'default')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_appcontainerization_vnet_name'), 'default')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -571,19 +571,19 @@
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_app2container_aspserver_nsg_name'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_appcontainerization_aspserver_nsg_name'))]"
                 }
             }
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkInterfaces_app2container_toolcl155_name')]",
+            "name": "[parameters('networkInterfaces_appcontainerization_toolcl155_name')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_app2container_toolclient_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_app2container_vnet_name'), 'default')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_app2container_toolclient_nsg_name'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_toolclient_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_appcontainerization_vnet_name'), 'default')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_appcontainerization_toolclient_nsg_name'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -593,10 +593,10 @@
                             "privateIPAddress": "10.0.0.4",
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_app2container_toolclient_ip_name'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_toolclient_ip_name'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_app2container_vnet_name'), 'default')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_appcontainerization_vnet_name'), 'default')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -609,7 +609,7 @@
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_app2container_toolclient_nsg_name'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_appcontainerization_toolclient_nsg_name'))]"
                 }
             }
         }
