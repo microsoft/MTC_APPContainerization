@@ -1,4 +1,4 @@
-# ASP.NET App Containerization Exercise 
+# ASP.NET App Containerization Demonstration
 
 In this exercise, you'll learn how to:
 
@@ -45,8 +45,6 @@ In this exercise, you'll learn how to:
    - **Enable PowerShell remoting**: The tool will inform you to ensure that PowerShell remoting is enabled on the application servers running the ASP.NET applications to be containerized.
 
 ## Deploy a sample ASP.NET application on the server
-
-
 
 Unzip the *appfiles.zip* file in the same folder of this repository, open the *Web.config* file, in the *connectionStrings* section, paste the connection string you obtained from the sql server you deployed through the ARM template in the environment setup section.
 

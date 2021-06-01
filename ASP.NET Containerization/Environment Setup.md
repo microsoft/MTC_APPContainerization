@@ -1,20 +1,20 @@
-# Workshop Environment Setup Instructions
+# Demo Environment Setup Instructions
 
-This section gives you guidance on how to setup the environment for the workshop, as follows:
+This section gives you guidance on how to setup the environment for the demonstration, as follows:
 
-> * Set up an Azure account.
-> * Deploy the ARM template for the infrastructure including Azure VMs, vNet etc.
-> * Confirm the environment setups 
+* Set up an Azure account.
+* Deploy the ARM template for the infrastructure including Azure VMs, vNet etc.
+* Confirm the environment setups 
+
+> Since it may take more than 15 minutes for the environment to be ready for the demonstration, it is recommended to setup the demo environment before the meeting.
 
 ## Prepare an Azure user account
 
-If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/pricing/free-trial/) before you begin.
-
-Once your subscription is set up, you'll need an Azure user account with:
+The requirements for the Azure account that associates with the subscription are:
 - Owner permissions on the Azure subscription
 - Permissions to register Azure Active Directory apps
 
-If you just created a free Azure account, you're the owner of your subscription. If you're not the subscription owner, work with the owner to assign the permissions as follows:
+If you're not the subscription owner, work with the owner to assign the permissions as follows:
 
 1. In the Azure portal, search for "subscriptions", and under **Services**, select **Subscriptions**.
 
@@ -39,14 +39,14 @@ If you just created a free Azure account, you're the owner of your subscription.
 
 10. In case the 'App registrations' settings is set to 'No', request the tenant/global admin to assign the required permission. Alternately, the tenant/global admin can assign the **Application Developer** role to an account to allow the registration of Azure Active Directory App. [Learn more](https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/active-directory/fundamentals/active-directory-users-assign-role-azure-portal.md).
 
-## Deploy the ARM template for the workshop 
+## Deploy the ARM template for the demonstration
 
-In this section, you deploy the ARM template designed for this workshop, including all the infrastructure needed:
+In this section, you deploy the ARM template designed for this demonstration, including all the infrastructure needed:
 
-> * **Tool Client Server**: This virtual machine is for installing the Azure Migrate Containerization tool and performing most of the containerization tasks.
-> * **ASP.NET Application Server**: This virtual machine is for the application server that runs the sample ASP.NET application that will be containerized and deployed in the Azure Kubernetes Service cluster by the tool.
-> * **Azure Bastion Service**: [Azure Bastion](https://azure.microsoft.com/en-us/services/azure-bastion/) is a fully managed PaaS service that provides secure and seamless RDP and SSH access to the virtual machines for this workshop directly through the Azure Portal.
-> * **Azure SQL Server"**: The fully managed Azure SQL service that the sample application connect to in this workshop.
+* **Tool Client Server**: This virtual machine is for installing the Azure Migrate Containerization tool and performing most of the containerization tasks.
+* **ASP.NET Application Server**: This virtual machine is for the application server that runs the sample ASP.NET application that will be containerized and deployed in the Azure Kubernetes Service cluster by the tool.
+* **Azure Bastion Service**: [Azure Bastion](https://azure.microsoft.com/en-us/services/azure-bastion/) is a fully managed PaaS service that provides secure and seamless RDP and SSH access to the virtual machines for this workshop directly through the Azure Portal.
+* **Azure SQL Server"**: The fully managed Azure SQL service that the sample application connect to in this workshop.
 
 To deploy the ARM template, log into the [Azure portal](https://portal.azure.com) using the account you have set up in the previous section. Then create a resource group within the subscription you choose and keep a note on the region that you choose to create the resource group. It is recommended to choose the region that is closest to you geographic area to keep the network latency minimal. Once you have created the resource group, click into the resource group and the **Add** button on the top left tab. Choose the **Custom Deployment** option. Once going into the **Custom Deployment** page, choose **Build your own template in the editor**. Paste the **template.json** file into the editor and click the *save* button. 
 
@@ -54,7 +54,7 @@ To deploy the ARM template, log into the [Azure portal](https://portal.azure.com
 
 In the next page, edit the items for a few parameters for the deployment, including VM password, SQL Server name and password etc.
 
-*Note: To avoid name conflict of the globally unique Azure SQL server names, try to attach a random number to the end of the string*
+> *Note: To avoid name conflict of the globally unique Azure SQL server names, try to attach a random number to the end of the string*
 
 ![Edit parameters for the ARM template](../media/ARM-template-parameter.png)
 
