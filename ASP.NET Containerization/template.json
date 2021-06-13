@@ -63,7 +63,10 @@
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+        "vmCustomScriptFileName": "configure-labvm.ps1",
+        "vmCustomScriptUri": "[concat('https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/ASP.NET%20Containerization/', variables('vmCustomScriptFileName'))]"
+    },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
@@ -343,7 +346,32 @@
                         "enabled": true
                     }
                 }
+            },
+            "resources": [
+            {
+                "name": "SetupLabVm",
+                "type": "extensions",
+                "apiVersion": "2020-06-01",
+                "location": "[parameters('resourceLocation')]",
+                "properties": {
+                    "publisher": "Microsoft.Compute",
+                    "type": "CustomScriptExtension",
+                    "protectedSettings": {},
+                    "typeHandlerVersion": "1.9",
+                    "autoUpgradeMinorVersion": true,
+                    "settings": {
+                    "fileUris": ["[variables('vmCustomScriptUri')]"],
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('vmCustomScriptFileName'))]"
+                    }
+                },
+                "dependsOn": [
+                    "[resourceId('Microsoft.Compute/virtualMachines/', parameters('virtualMachines_appcontainerization_toolclient_name'))]"
+                ],
+                "tags": {
+                    "displayName": "SetupLabVm"
+                }
             }
+        ]
         },
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
