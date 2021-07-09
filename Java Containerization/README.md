@@ -25,7 +25,7 @@ Fully automated deployment via arm templates and custom scripts
     chmod +x scripts/deploy.sh
     ./scripts/deploy.sh '<REGION NAME>' '<RESOURCE GROUP>'
 
-Total depoyment will take ~5 minutes.  When complete navigate to the resource group in the azure portal.  Find the created vm named TomcatServer click on its name.  
+Total deployment will take ~5 minutes.  When complete navigate to the resource group in the azure portal.  Find the created vm named TomcatServer click on its name.  
 
 ![Tomcat VM.](https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/media/server.jpg)
 
