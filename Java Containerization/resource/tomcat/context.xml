@@ -1,0 +1,11 @@
+<Context> 
+    <Resource name="jdbc/airsonicDB" auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="20"
+        maxIdle="30"
+        maxWait="10000"
+        username="${MYSQL_SERVER_ADMIN_LOGIN_NAME}"
+        password="${MYSQL_SERVER_ADMIN_PASSWORD}"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://${MYSQL_SERVER_FULL_NAME}:3306/${MYSQL_DATABASE_NAME}?useSSL=false&amp;sessionVariables=sql_mode=ANSI_QUOTES"/>
+</Context> 

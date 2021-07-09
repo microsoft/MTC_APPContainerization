@@ -1,0 +1,476 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "javaPackageName": {
+      "type": "string",
+      "defaultValue": "openjdk-11-jdk",
+      "allowedValues": [
+        "openjdk-11-jdk",
+        "openjdk-12-jdk",
+        "openjdk-13-jdk"
+      ],
+      "metadata": {
+        "description": "java Package Name"
+      }
+    },
+    "tomcatPackageName": {
+      "type": "string",
+      "metadata": {
+        "description": "tomcat Package Name"
+      }
+    },
+    "airsonicPackageName": {
+      "type": "string",
+      "metadata": {
+        "description": "location of airsonic app package"
+      }
+    },
+    "tomcatContext": {
+      "type": "string",
+      "metadata": {
+        "description": "tomcat context for airsonic app"
+      }
+    },
+    "mysqlDriverName": {
+      "type": "string",
+      "metadata": {
+        "description": "mysql java driver"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "User name for the Virtual Machine."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2s_v3",
+      "metadata": {
+        "description": "The size of the virtual machines used when provisioning"
+      }
+    },
+    "ubuntuOSVersion": {
+      "type": "string",
+      "defaultValue": "18.04-LTS",
+      "allowedValues": [
+        "18.04-LTS",
+        "16.04-LTS",
+        "14.04.5-LTS"
+      ],
+      "metadata": {
+        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "authenticationType": {
+      "type": "securestring",
+      "defaultValue": "password",
+      "allowedValues": [
+        "sshPublicKey",
+        "password"
+      ],
+      "metadata": {
+        "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
+      }
+    },
+    "adminPasswordOrKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+      }
+    },
+    "mysqlServername": {
+      "type": "string",
+      "defaultValue": "[concat('airsonic-mysql-server-', utcNow('MMddyyHmmss'))]",      
+      "metadata": {
+        "description": "MySQL Server name for the demo db"
+      }
+    },
+    "mysqlDBName": {
+      "type": "string",
+      "metadata": {
+        "description": "MySQL Server name for the demo db"
+      }
+    },
+    "mysqlAdminName": {
+      "type": "securestring",
+      "metadata": {
+        "description": "MySQL server admin name for the demo db"
+      }
+    },
+    "mysqlAdminPass": {
+      "type": "securestring",
+      "metadata": {
+        "description": "MySQL server pass for the demo db"
+      }
+    },
+    "mysqlClientPackage": {
+      "type": "string",
+      "metadata": {
+        "description": "MySQL client package"
+      }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The base URI where artifacts required by this template are located."
+      }
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated."
+      },
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "imagePublisher": "Canonical",
+    "imageOffer": "UbuntuServer",
+    "nicName": "myVMNic",
+    "nsgName": "myNSG",
+    "vmName": "TomcatServer",
+    "addressPrefix": "10.0.0.0/16",
+    "subnetName": "Subnet",
+    "subnetPrefix": "10.0.0.0/24",
+    "publicIPAddressName": "myPublicIP",
+    "virtualNetworkName": "MyVNET",
+    "linuxConfiguration": {
+    "disablePasswordAuthentication": false
+//      "disablePasswordAuthentication": true,
+//      "ssh": {
+//        "publicKeys": [
+        //   {
+        //     "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+        //     "keyData": "[parameters('adminPasswordOrKey')]"
+        //   }
+        // ]
+//      }
+    },
+    "networkSecurityGroupName": "default-NSG"
+  },
+  "resources": [
+    {
+      "apiVersion": "2019-06-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Basic"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "comments": "Default Network Security Group for template",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-08-01",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "default-allow-22",
+            "properties": {
+              "priority": 1000,
+              "access": "Allow",
+              "direction": "Inbound",
+              "destinationPortRange": "22",
+              "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "default-allow-8080",
+            "properties": {
+              "priority": 1010,
+              "access": "Allow",
+              "direction": "Inbound",
+              "destinationPortRange": "8080",
+              "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2019-06-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnetPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2019-06-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-06-01",
+      "name": "[variables('nsgName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "SSH",
+            "properties": {
+              "description": "Allow SSH",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Web",
+            "properties": {
+              "description": "Allow Web",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8080",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 112,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2019-07-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPasswordOrKey')]",
+          "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('imagePublisher')]",
+            "offer": "[variables('imageOffer')]",
+            "sku": "[parameters('ubuntuOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "osType": "Linux",
+            "name": "[concat(variables('vmName'),'_OSDisk')]",
+            "caching": "ReadWrite",
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "StandardSSD_LRS"
+            }
+          },                    
+          "dataDisks": [
+              {
+                  "lun": 0,
+                  "name": "[concat(variables('vmName'),'_DataDisk_0')]",
+                  "createOption": "Empty",
+                  "caching": "None",
+                  "writeAcceleratorEnabled": false,
+                  "managedDisk": {
+                      "storageAccountType": "Premium_LRS"
+                  },
+                  "diskSizeGB": 32,
+                  "toBeDetached": false
+              }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        }
+      }
+    },
+    {
+        "type": "Microsoft.DBforMySQL/servers",
+        "apiVersion": "2017-12-01-preview",
+        "name": "[parameters('mySqlServername')]",
+        "location": "[parameters('location')]",
+        "sku": {
+            "name": "GP_Gen5_2",
+            "tier": "GeneralPurpose",
+            "family": "Gen5",
+            "size": "5120",
+            "capacity": 2
+        },
+        "properties": {
+          "createMode": "Default",
+          "version": "5.7",
+          "administratorLogin": "[parameters('mySqlAdminName')]",
+          "administratorLoginPassword": "[parameters('mySqlAdminPass')]",
+          "sslEnforcement": "Disabled"
+        },
+        "resources": [
+         {
+           "type": "Microsoft.DBforMySQL/servers/databases",
+           "apiversion": "2017-12-01",
+           "name": "[concat(parameters('mySqlServername'), '/', parameters('mysqlDBName'))]",
+           "dependsOn": [
+              "[resourceId('Microsoft.DBforMySQL/servers', parameters('mySqlServername'))]"
+           ],
+           "properties": {
+             "charset": "utf8",
+             "collation": "utf8_general_ci"           
+             }
+         }
+        ]
+    },
+    /*
+    {
+      "type": "Microsoft.DBforMySQL/servers/configurations",
+      "apiVersion": "2017-12-01",
+      "name": "[concat(parameters('mySqlServername'), '/timezone')]",
+      "dependsOn": [
+          "[resourceId('Microsoft.DBforMySQL/servers', parameters('mySqlServername'))]"
+      ],
+      "properties": {
+        "value": "US/Pacific",
+        "source": "time_zone"
+      }
+    },
+    */    
+    {
+        "type": "Microsoft.DBforMySQL/servers/firewallRules",
+        "apiVersion": "2017-12-01-preview",
+        "name": "[concat(parameters('mySqlServername'), '/AllowAllWindowsAzureIps')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.DBforMySQL/servers', parameters('mySqlServername'))]"
+        ],
+        "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+        }
+    },
+    {
+        "type": "Microsoft.DBforMySQL/servers/firewallRules",
+        "apiVersion": "2017-12-01-preview",
+        "name": "[concat(parameters('mySqlServername'), '/AllowAllWindowsDevIps')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.DBforMySQL/servers', parameters('mySqlServername'))]"
+        ],
+        "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "255.255.255.255"
+        }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('vmName'),'/installscript')]",
+      "apiVersion": "2019-07-01",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName'))]",
+        "[resourceId('Microsoft.DBforMySQL/servers', parameters('mySqlServername'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "protectedSettings": {
+          "commandToExecute": "[
+              concat('sh setup-vm.sh',' ', 
+                parameters('adminUsername'), ' ', 
+                parameters('javaPackageName'),' ', 
+                parameters('tomcatPackageName'), ' ',
+                parameters('airsonicPackageName'), ' ',
+                parameters('tomcatContext'), ' ',
+                parameters('mysqlDriverName'), ' ',
+                parameters('mysqlClientPackage'), ' ',
+                concat(parameters('mysqlAdminName'), '@', parameters('mySqlServername')), ' ',
+                concat('''', parameters('mysqlAdminPass'), ''''), ' ',
+                concat(parameters('mySqlServername'), '.mysql.database.azure.com'), ' ',
+                parameters('mysqlDBName')
+              )
+            ]",
+          "fileUris": [
+            "[uri(parameters('_artifactsLocation'), concat('setup-vm.sh', parameters('_artifactsLocationSasToken')))]",
+            "[uri(parameters('_artifactsLocation'), concat('java-tomcat-install.sh', parameters('_artifactsLocationSasToken')))]",
+            "[uri(parameters('_artifactsLocation'), concat('airsonic-install.sh', parameters('_artifactsLocationSasToken')))]",
+            "[uri(parameters('_artifactsLocation'), concat('mysql-install.sh', parameters('_artifactsLocationSasToken')))]",
+            "[uri(parameters('_artifactsLocation'), concat('mysql-bind.sh', parameters('_artifactsLocationSasToken')))]"
+          ]
+        }
+      }
+    }
+  ]
+}
