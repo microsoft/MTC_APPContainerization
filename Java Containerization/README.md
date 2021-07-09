@@ -14,7 +14,7 @@ Fully automated deployment via arm templates and custom scripts
 * When this repo is cloned the base path to repo where the vm install scripts needs to be updated in azuredeploy.parameters.json to the **raw** path of new repo as show below.
     ```
     "_artifactsLocation": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/AzureMigrateJava/main/scripts/vm/"
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/"
     }
     ```
 
