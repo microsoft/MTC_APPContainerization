@@ -85,5 +85,6 @@ Expand-Archive -LiteralPath 'D:\appfile.zip' -DestinationPath D:\sitefiles
 $dbname = $args[0]
 ((Get-Content -path D:\sitefiles\appfiles\Web.config -Raw) -replace 'RANDBNAME', $dbname) | Set-Content -Path D:\sitefiles\appfiles\Web.config
 
-# Create the application pool and website
-new-WebSite -name "Demo" -Port 8080 -PhysicalPath "D:\sitefiles\appfiles\" -Force
+# Delete default website and create the application pool and website
+Get-WebSite -Name "Default Web Site" | Remove-WebSite -Confirm:$false -Verbose
+new-WebSite -name "Demo" -Port 80 -PhysicalPath "D:\sitefiles\appfiles\" -Force
