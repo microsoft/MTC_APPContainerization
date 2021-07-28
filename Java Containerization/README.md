@@ -25,11 +25,15 @@ To deploy this workshop environment, begin by navigating to the Azure portal at 
 From the terminal window execute the following commands to clone the App Migration Workshop project.  Navigate to the Java migrate sub module and execute the deployment script substituting the target region name and resource group for which the resources will be deployed.
 
     git clone https://github.com/microsoft/MTC_APPContainerization.git
-    cd AzureMigrateJava
+    cd MTC_APPContainerization/Java\ Containerization/
     chmod +x scripts/deploy.sh
     ./scripts/deploy.sh '<REGION NAME>' '<RESOURCE GROUP>'
 
-Total deployment will take ~5 minutes.  When complete navigate to the resource group in the azure portal.  Find the created vm named TomcatServer click on its name.  
+For example:
+
+     ./scripts/deploy.sh 'westus' 'jm-rg2'
+
+Total deployment will take ~5 minutes.  When complete navigate to the newly created resource group in the azure portal.  Find the created vm named TomcatServer click on its name.  
 
 ![Tomcat VM.](../media/server.jpg)
 
@@ -37,5 +41,5 @@ Identify the public IP address provisioned for the VM.
 
 ![Public IP.](../media/ip.jpg)
 
-Use the IP address to access the Airsonic app at http://{ip}/airsonic
+Use the IP address to access the Airsonic app at http://{ip}:8080/airsonic
 ![Airsonic App.](../media/app.jpg)

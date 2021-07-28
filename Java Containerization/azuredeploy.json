@@ -38,7 +38,7 @@
         "description": "mysql java driver"
       }
     },
-    "adminUsername": {
+    "vmAdminUsername": {
       "type": "string",
       "metadata": {
         "description": "User name for the Virtual Machine."
@@ -81,7 +81,7 @@
         "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
       }
     },
-    "adminPasswordOrKey": {
+    "vmAdminPasswordOrKey": {
       "type": "securestring",
       "metadata": {
         "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
@@ -144,17 +144,16 @@
     "publicIPAddressName": "myPublicIP",
     "virtualNetworkName": "MyVNET",
     "linuxConfiguration": {
-    "disablePasswordAuthentication": false
-//      "disablePasswordAuthentication": true,
-//      "ssh": {
-//        "publicKeys": [
-        //   {
-        //     "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
-        //     "keyData": "[parameters('adminPasswordOrKey')]"
-        //   }
-        // ]
-//      }
-    },
+      "disablePasswordAuthentication": true,
+      "ssh": {
+        "publicKeys": [
+           {
+             "path": "[concat('/home/', parameters('vmAdminUsername'), '/.ssh/authorized_keys')]",
+             "keyData": "[parameters('vmAdminPasswordOrKey')]"
+           }
+         ]
+      }
+      },
     "networkSecurityGroupName": "default-NSG"
   },
   "resources": [
@@ -199,6 +198,19 @@
               "direction": "Inbound",
               "destinationPortRange": "8080",
               "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "default-allow-ping",
+            "properties": {
+              "priority": 1020,
+              "access": "Allow",
+              "direction": "Inbound",
+              "destinationPortRange": "*",
+              "protocol": "ICMP",
               "sourceAddressPrefix": "*",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*"
@@ -298,7 +310,21 @@
               "priority": 112,
               "direction": "Inbound"
             }
-          }
+          },
+          {
+            "name": "Ping",
+            "properties": {
+              "description": "Allow ping",
+              "protocol": "ICMP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 101,
+              "direction": "Inbound"
+            }
+          }          
         ]
       }
     },
@@ -316,8 +342,8 @@
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "adminPassword": "[parameters('adminPasswordOrKey')]",
+          "adminUsername": "[parameters('vmAdminUsername')]",
+          "adminPassword": "[parameters('vmAdminPasswordOrKey')]",
           "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
         },
         "storageProfile": {
@@ -449,7 +475,7 @@
         "protectedSettings": {
           "commandToExecute": "[
               concat('sh setup-vm.sh',' ', 
-                parameters('adminUsername'), ' ', 
+                parameters('vmAdminUsername'), ' ', 
                 parameters('javaPackageName'),' ', 
                 parameters('tomcatPackageName'), ' ',
                 parameters('airsonicPackageName'), ' ',
