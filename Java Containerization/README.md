@@ -16,7 +16,7 @@ Fully automated deployment via arm templates and custom scripts
 
 To deploy this workshop environment, begin by navigating to the Azure portal at https://portal.azure.com and opening the cloud shell as shown belew:
 
-![Cloud Shell](../media/shell.png)
+![Cloud Shell](../media/openshell.png)
 
 ...
 
