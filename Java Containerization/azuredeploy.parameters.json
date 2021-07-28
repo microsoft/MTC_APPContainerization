@@ -21,7 +21,7 @@
       "value": "adminUser"
     },
     "vmAdminPasswordOrKey": {
-      "value": "password@123"
+      "value": "Password@123"
     },
     "mysqlAdminName": {
       "value": "mysqladmin"
