@@ -17,8 +17,11 @@
     "mysqlDriverName": {
       "value":"https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.48.tar.gz"
     },
-    "adminUsername": {
-      "value": "adminuser"
+    "vmAdminUsername": {
+      "value": "adminUser"
+    },
+    "vmAdminPasswordOrKey": {
+      "value": "Password@123"
     },
     "mysqlAdminName": {
       "value": "mysqladmin"
@@ -31,9 +34,6 @@
     },
     "mysqlClientPackage": {
       "value": "mysql-client-core-5.7"
-    },
-    "adminPasswordOrKey": {
-      "value": "Super$ekr3tPa$sw0rd!"
     },
     "_artifactsLocation": {
       "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"

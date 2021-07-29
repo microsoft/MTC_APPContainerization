@@ -19,17 +19,18 @@ jar -xvf airsonic.war
 rm -rf airsonic.war 
 mv * /opt/tomcat9/webapps/airsonic
 
-mkdir -p /datadrive/airsonic/
+MEDIA_BASEDIR=/var
+#MEDIA_BASEDIR=/datadrive/airsonic
+#mkdir -p $MEDIA_BASEDIR
 
 # create music, media, podcasts and playlists folders
-cd /datadrive/airsonic/
+cd $MEDIA_BASEDIR
 mkdir music
+mkdir music/podcasts
 mkdir media
-mkdir podcasts
-mkdir playlists
 
-chown -R tomcat9:tomcat9 /datadrive/airsonic/
-chmod 777 /datadrive/airsonic/music
+chown -R tomcat9:tomcat9 $MEDIA_BASEDIR
+chmod 777 $MEDIA_BASEDIR/music
 
 # setup env vars
 echo "Setting env vars"
