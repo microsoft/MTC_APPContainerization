@@ -44,17 +44,6 @@ curl -O $TOMCAT_PACKAGE
 sudo mkdir /opt/tomcat9 
 sudo tar xzvf apache-tomcat-*tar.gz -C /opt/tomcat9 --strip-components=1 
 
-# Update permissions for tomcat9 directory 
-cd /opt/tomcat9 
-sudo chgrp -R tomcat9 /opt/tomcat9 
-
-# Give tomcat9 group read access 
-sudo chmod -R g+r conf 
-sudo chmod g+x conf 
-
-# Make the tomcat user the owner of the Web apps, work, temp, and logs directories: 
-sudo chown -R tomcat9 webapps/ work/ temp/ logs/ bin/
-
 # Download tomcat service file and move to systemd
 wget $TOMCAT_SERVICE
 mv ./tomcat9.service  /etc/systemd/system/
@@ -76,12 +65,23 @@ cd hostmanager
 wget $HOSTMANAGER_CONTEXT
 mv ./context.xml  /opt/tomcat9/webapps/host-manager/META-INF/
 
+# Update permissions for tomcat9 directory 
+cd /opt/tomcat9 
+sudo chgrp -R tomcat9 /opt/tomcat9 
+
+# Give tomcat9 group read access 
+sudo chmod -R g+r conf 
+sudo chmod g+x conf 
+
+# Make the tomcat user the owner of the Web apps, work, temp, and logs directories: 
+sudo chown -R tomcat9 webapps/ work/ temp/ logs/ bin/
+
 # reload the systemd daemon so that it knows about our service file
-#sudo systemctl daemon-reload
+sudo systemctl daemon-reload
 #sudo systemctl start tomcat9
 
 # Enable the service file so that Tomcat automatically starts at boot:
-#sudo systemctl enable tomcat9
+sudo systemctl enable tomcat9
 
 
 

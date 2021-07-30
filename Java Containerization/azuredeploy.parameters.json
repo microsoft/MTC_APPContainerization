@@ -33,7 +33,7 @@
       //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
     },
     "tomcatUsersFile": {
-      "value": "https://github.com/Lantern-Cloud-Services/MTC_APPContainerization/blob/jcdev0728/Java%20Containerization/resource/tomcat/conf/tomcat-users.xml"
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/resource/tomcat/conf/tomcat-users.xml"
       //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
     },
 

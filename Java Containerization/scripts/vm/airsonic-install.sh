@@ -15,11 +15,9 @@ wget $AIRSONIC_PACKAGE
 # Move the downloaded WAR file in the $TOMCAT_HOME/webapps  
 # folder and assign ownership to the Tomcat system user: 
 mkdir /opt/tomcat9/webapps/airsonic
-
 jar -xvf airsonic.war
 rm -rf airsonic.war 
 mv * /opt/tomcat9/webapps/airsonic
-
 
 #AIRSONIC_BASEDIR=/datadrive/airsonic
 AIRSONIC_BASEDIR=/var/airsonic
@@ -34,6 +32,9 @@ mkdir media
 chown -R tomcat9:tomcat9 $AIRSONIC_BASEDIR
 chmod 777 $AIRSONIC_BASEDIR/music
 
+
+
+
 # setup env vars
 #echo "Setting env vars"
 #echo "CATALINA_OPTS='-Xms512M -Xmx1024M -server -XX:+UseParallelGC'" >> /opt/tomcat9/bin/setenv.sh
@@ -41,9 +42,11 @@ chmod 777 $AIRSONIC_BASEDIR/music
 #echo "Setting env vars complete"
 
 # Start/Stop tomcat to generate airsonic properties file
-#echo "Starting tomcat"
+echo "Starting tomcat"
 #/opt/tomcat9/bin/startup.sh
-#sleep 30
-#echo "Stopping tomcat"
+sudo systemctl start tomcat9
+sleep 30
+echo "Stopping tomcat"
 #/opt/tomcat9/bin/shutdown.sh
-#sleep 30
+sudo systemctl stop tomcat9
+sleep 30
