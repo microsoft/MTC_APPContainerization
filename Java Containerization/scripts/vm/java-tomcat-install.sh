@@ -56,7 +56,7 @@ mv ./tomcat-users.xml  /opt/tomcat9/conf/
 
 # Download and deploy tomcat server.xml
 wget $TOMCAT_SERVERCONF
-#mv ./tomcat-users.xml  /opt/tomcat9/conf/
+mv ./server.xml  /opt/tomcat9/conf/
 
 # Download and deploy manager context.xml
 mkdir manager
