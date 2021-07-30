@@ -18,10 +18,10 @@ MYSQL_DBNAME=$11
 mkdir $LOG_HOME
 
 sh java-tomcat-install.sh $JAVA_PACKAGE $TOMCAT_PACKAGE >> $LOG_HOME/java-tomcat-install.log
-sh airsonic-install.sh $AIRSONIC_PACKAGE >> $LOG_HOME/airsonic-install.log
-sh mysql-install.sh $MYSQL_CLIENT_PACKAGE $MYSQL_ADMIN_USER $MYSQL_SERVER_HOST $MYSQL_ADMIN_PASS >> $LOG_HOME/mysql-install.log
-sh mysql-bind.sh $TOMCAT_CONTEXT $MYSQL_DRIVER $MYSQL_ADMIN_USER $MYSQL_ADMIN_PASS $MYSQL_DBNAME $MYSQL_SERVER_HOST >> $LOG_HOME/mysql-bind.log
+#sh airsonic-install.sh $AIRSONIC_PACKAGE >> $LOG_HOME/airsonic-install.log
+#sh mysql-install.sh $MYSQL_CLIENT_PACKAGE $MYSQL_ADMIN_USER $MYSQL_SERVER_HOST $MYSQL_ADMIN_PASS >> $LOG_HOME/mysql-install.log
+#sh mysql-bind.sh $TOMCAT_CONTEXT $MYSQL_DRIVER $MYSQL_ADMIN_USER $MYSQL_ADMIN_PASS $MYSQL_DBNAME $MYSQL_SERVER_HOST >> $LOG_HOME/mysql-bind.log
 
-echo "Starting tomcat"
-/opt/tomcat9/bin/startup.sh
-sleep 30
+#echo "Starting tomcat"
+#/opt/tomcat9/bin/startup.sh
+#sleep 30

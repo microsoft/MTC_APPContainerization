@@ -36,7 +36,7 @@
       "value": "mysql-client-core-5.7"
     },
     "_artifactsLocation": {
-      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/scripts/vm/"
     }
   }
 }

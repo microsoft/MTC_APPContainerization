@@ -35,7 +35,7 @@ chmod 777 $MEDIA_BASEDIR/music
 # setup env vars
 echo "Setting env vars"
 echo "CATALINA_OPTS='-Xms512M -Xmx1024M -server -XX:+UseParallelGC'" >> /opt/tomcat9/bin/setenv.sh
-echo "JAVA_OPTS='-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dairsonic.home=/datadrive/airsonic'" >> /opt/tomcat9/bin/setenv.sh
+echo "JAVA_OPTS='-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dairsonic.home=/var/airsonic'" >> /opt/tomcat9/bin/setenv.sh
 echo "Setting env vars complete"
 
 # Start/Stop tomcat to generate airsonic properties file
