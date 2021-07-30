@@ -5,20 +5,38 @@
     "javaPackageName": {
       "value": "openjdk-11-jdk"
     },
+    "_artifactsLocation": {
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/scripts/vm/"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"
+    },
     "tomcatPackageName": {
       "value":"https://downloads.apache.org/tomcat/tomcat-9/v9.0.50/bin/apache-tomcat-9.0.50.tar.gz"
     },
     "airsonicPackageName": {
       "value":"https://github.com/airsonic/airsonic/releases/download/v10.6.2/airsonic.war"
     },
-    "tomcatContext": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization//tomcat/context.xml"
-      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/context.xml"
-    },
     "tomcatServiceFile": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/tomcat/tomcat9.service"
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/resource/tomcat/tomcat9.service"
       //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
     },
+    "tomcatContext": {
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/resource/tomcat/webapp/context.xml"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/context.xml"
+    },
+
+    "tomcatManagerContext": {
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/resource/tomcat/manager/context.xml"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
+    },
+    "tomcatHostManagerContext": {
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/resource/tomcat/host-manager/context.xml"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
+    },
+    "tomcatUsersFile": {
+      "value": "https://github.com/Lantern-Cloud-Services/MTC_APPContainerization/blob/jcdev0728/Java%20Containerization/resource/tomcat/conf/tomcat-users.xml"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
+    },
+
     "mysqlDriverName": {
       "value":"https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.48.tar.gz"
     },
@@ -39,10 +57,6 @@
     },
     "mysqlClientPackage": {
       "value": "mysql-client-core-5.7"
-    },
-    "_artifactsLocation": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/scripts/vm/"
-      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"
     }
   }
 }
