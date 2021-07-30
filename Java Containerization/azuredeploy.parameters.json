@@ -12,7 +12,12 @@
       "value":"https://github.com/airsonic/airsonic/releases/download/v10.6.2/airsonic.war"
     },
     "tomcatContext": {
-      "value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/context.xml"
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization//tomcat/context.xml"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/context.xml"
+    },
+    "tomcatServiceFile": {
+      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/tomcat/tomcat9.service"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
     },
     "mysqlDriverName": {
       "value":"https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.48.tar.gz"
@@ -37,6 +42,7 @@
     },
     "_artifactsLocation": {
       "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/jcdev0728/Java%20Containerization/scripts/vm/"
+      //"value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"
     }
   }
 }

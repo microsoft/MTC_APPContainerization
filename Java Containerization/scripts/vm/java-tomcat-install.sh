@@ -2,6 +2,7 @@
 
 JAVA_PACKAGE=$1
 TOMCAT_PACKAGE=$2
+TOMCAT_SERVICE=$3
 
 
 echo "Intalling Java"
@@ -43,6 +44,25 @@ sudo chmod g+x conf
 
 # Make the tomcat user the owner of the Web apps, work, temp, and logs directories: 
 sudo chown -R tomcat9 webapps/ work/ temp/ logs/ bin/
+
+# Download tomcat service file and move to systemd
+wget $TOMCAT_SERVICE
+mv ./tomcat9.service  /etc/systemd/system/
+
+# reload the systemd daemon so that it knows about our service file
+sudo systemctl daemon-reload
+#sudo systemctl start tomcat9
+
+# Configure Tomcat 9
+# Configure management user
+#sudo nano /opt/tomcat9/conf/tomcat-users.xml
+
+# Enable the service file so that Tomcat automatically starts at boot:
+#sudo systemctl enable tomcat9
+
+
+
+
 echo "Installing Tomcat complete"
 echo ""
 echo ""

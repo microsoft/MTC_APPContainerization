@@ -32,6 +32,12 @@
         "description": "tomcat context for airsonic app"
       }
     },
+    "tomcatServiceFile": {
+      "type": "string",
+      "metadata": {
+        "description": "tomcat service file for systemd"
+      }
+    },
     "mysqlDriverName": {
       "type": "string",
       "metadata": {
@@ -478,6 +484,7 @@
                 parameters('vmAdminUsername'), ' ', 
                 parameters('javaPackageName'),' ', 
                 parameters('tomcatPackageName'), ' ',
+                parameters('tomcatServiceFile'), ' ',
                 parameters('airsonicPackageName'), ' ',
                 parameters('tomcatContext'), ' ',
                 parameters('mysqlDriverName'), ' ',
