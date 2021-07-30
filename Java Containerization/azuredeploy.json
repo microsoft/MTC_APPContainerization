@@ -38,11 +38,16 @@
         "description": "tomcat service file for systemd"
       }
     },
-
     "tomcatUsersFile": {
       "type": "string",
       "metadata": {
         "description": "tomcat user admin file"
+      }
+    },
+    "tomcatServerConf": {
+      "type": "string",
+      "metadata": {
+        "description": "tomcat server conf"
       }
     },
     "tomcatManagerContext": {
@@ -509,11 +514,10 @@
                 parameters('javaPackageName'),' ', 
                 parameters('tomcatPackageName'), ' ',
                 parameters('tomcatServiceFile'), ' ',
-
                 parameters('tomcatUsersFile'), ' ',
+                parameters('tomcatServerConf'), ' ',
                 parameters('tomcatManagerContext'), ' ',
                 parameters('tomcatHostManagerContext'), ' ',
-
                 parameters('airsonicPackageName'), ' ',
                 parameters('tomcatContext'), ' ',
                 parameters('mysqlDriverName'), ' ',

@@ -4,14 +4,16 @@ JAVA_PACKAGE=$1
 TOMCAT_PACKAGE=$2
 TOMCAT_SERVICE=$3
 TOMCAT_USERS=$4
-MANAGER_CONTEXT=$5
-HOSTMANAGER_CONTEXT=$6
+TOMCAT_SERVERCONF=$5
+MANAGER_CONTEXT=$6
+HOSTMANAGER_CONTEXT=$7
 
 
 echo "java package: "$JAVA_PACKAGE
 echo "tomcat package: "$TOMCAT_PACKAGE
 echo "tomcat service file: "$TOMCAT_SERVICE
 echo "tomcat users file: "$TOMCAT_USERS
+echo "tomcat server.xml: "$TOMCAT_SERVERCONF
 echo "tomcat manager file: "$TOMCAT_MANAGERCONTEXT
 echo "tomcat hostmanager file: "$TOMCAT_HOSTMANAGERCONTEXT
 
@@ -51,6 +53,10 @@ mv ./tomcat9.service  /etc/systemd/system/
 # Download and deploy tomcat-users.xml
 wget $TOMCAT_USERS
 mv ./tomcat-users.xml  /opt/tomcat9/conf/
+
+# Download and deploy tomcat server.xml
+wget $TOMCAT_SERVERCONF
+#mv ./tomcat-users.xml  /opt/tomcat9/conf/
 
 # Download and deploy manager context.xml
 mkdir manager
