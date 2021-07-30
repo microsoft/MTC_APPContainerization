@@ -5,6 +5,10 @@ TOMCAT_PACKAGE=$2
 TOMCAT_SERVICE=$3
 
 
+echo "java package: "$JAVA_PACKAGE
+echo "tomcat package: "$TOMCAT_PACKAGE
+echo "tomcat service file: "$TOMCAT_SERVICE
+
 echo "Intalling Java"
 ### Install Java ###
 ####################
@@ -49,6 +53,13 @@ sudo chown -R tomcat9 webapps/ work/ temp/ logs/ bin/
 wget $TOMCAT_SERVICE
 mv ./tomcat9.service  /etc/systemd/system/
 
+
+# Download and deploy tomcat-users.xml
+
+# Download and deploy manager context.xml
+
+# Download and deploy host-manager context.xml
+
 # reload the systemd daemon so that it knows about our service file
 sudo systemctl daemon-reload
 #sudo systemctl start tomcat9
@@ -58,7 +69,7 @@ sudo systemctl daemon-reload
 #sudo nano /opt/tomcat9/conf/tomcat-users.xml
 
 # Enable the service file so that Tomcat automatically starts at boot:
-#sudo systemctl enable tomcat9
+sudo systemctl enable tomcat9
 
 
 
