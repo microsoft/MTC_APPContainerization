@@ -6,27 +6,15 @@
             "defaultValue": "westus",
             "type": "String"
         },
-        "osPassword": {
-            "defaultValue": "APP@2container",
-            "type": "String"
-        },
-        "sqlPassword": {
-            "defaultValue": "APP@2container",
-            "type": "String"
-        },
         "bastionHosts_bastion_name": {
-            "defaultValue": "bastion-89757",
-            "type": "String"
-        },
-        "servers_appcontainerization_demo_name": {
-            "defaultValue": "appcontainerization-demo",
+            "defaultValue": "bastion-host",
             "type": "String"
         },
         "virtualNetworks_appcontainerization_vnet_name": {
             "defaultValue": "appcontainerization-vnet",
             "type": "String"
         },
-        "virtualMachines_appcontainerization_aspserver_name": {
+        "AppServer": {
             "defaultValue": "vm-aspserver",
             "type": "String"
         },
@@ -34,7 +22,7 @@
             "defaultValue": "appcontainerization-vnet-ip",
             "type": "String"
         },
-        "virtualMachines_appcontainerization_toolclient_name": {
+        "AppContainerizationToolServer": {
             "defaultValue": "vm-toolclient",
             "type": "String"
         },
@@ -64,8 +52,13 @@
         }
     },
     "variables": {
-        "vmCustomScriptFileName": "configure-labvm.ps1",
-        "vmCustomScriptUri": "[concat('https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/ASP.NET%20Containerization/', variables('vmCustomScriptFileName'))]"
+        "vmTCCustomScriptFileName": "configure-labvm.ps1",
+        "vmTCCustomScriptUri": "[concat('https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/ASP.NET%20Containerization/', variables('vmTCCustomScriptFileName'))]",
+        "vmASCustomScriptFileName": "configure-labvm-as.ps1",
+        "vmASCustomScriptUri": "[concat('https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/ASP.NET%20Containerization/', variables('vmASCustomScriptFileName'))]",
+        "osPassword": "Password@123",
+        "sqlPassword": "Password@123",
+        "AppDatabase": "[concat('appcontainerization-lab', substring(uniqueString(resourceGroup().id),0,4))]"
     },
     "resources": [
         {
@@ -192,12 +185,12 @@
         {
             "type": "Microsoft.Sql/servers",
             "apiVersion": "2020-11-01-preview",
-            "name": "[parameters('servers_appcontainerization_demo_name')]",
+            "name": "[variables('AppDatabase')]",
             "location": "[parameters('resourceLocation')]",
             "kind": "v12.0",
             "properties": {
-                "administratorLogin": "sqladmin",
-                "administratorLoginPassword": "[parameters('sqlPassword')]",
+                "administratorLogin": "adminuser",
+                "administratorLoginPassword": "[variables('sqlPassword')]",
                 "version": "12.0",
                 "publicNetworkAccess": "Enabled"
             }
@@ -205,7 +198,7 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2020-12-01",
-            "name": "[parameters('virtualMachines_appcontainerization_aspserver_name')]",
+            "name": "[parameters('AppServer')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_appcontainerization_aspser291_name'))]"
@@ -223,7 +216,7 @@
                     },
                     "osDisk": {
                         "osType": "Windows",
-                        "name": "[concat(parameters('virtualMachines_appcontainerization_aspserver_name'), '_disk1_76a963d50a3f46c0b0715f828b4a7c4e')]",
+                        "name": "[concat(parameters('AppServer'), '_disk1_76a963d50a3f46c0b0715f828b4a7c4e')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -234,7 +227,7 @@
                     "dataDisks": [
                         {
                             "lun": 0,
-                            "name": "[concat(parameters('virtualMachines_appcontainerization_aspserver_name'), '_DataDisk_0')]",
+                            "name": "[concat(parameters('AppServer'), '_DataDisk_0')]",
                             "createOption": "Empty",
                             "caching": "None",
                             "writeAcceleratorEnabled": false,
@@ -248,8 +241,8 @@
                 },
                 "osProfile": {
                     "computerName": "aspserver",
-                    "adminUsername": "appadmin",
-                    "adminPassword": "[parameters('osPassword')]",
+                    "adminUsername": "adminuser",
+                    "adminPassword": "[variables('osPassword')]",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true,
@@ -273,12 +266,34 @@
                         "enabled": true
                     }
                 }
+            },
+            "resources": [
+            {
+                "name": "SetupLabVm",
+                "type": "extensions",
+                "apiVersion": "2020-06-01",
+                "location": "[parameters('resourceLocation')]",
+                "properties": {
+                    "publisher": "Microsoft.Compute",
+                    "type": "CustomScriptExtension",
+                    "protectedSettings": {},
+                    "typeHandlerVersion": "1.9",
+                    "autoUpgradeMinorVersion": true,
+                    "settings": {
+                    "fileUris": ["[variables('vmASCustomScriptUri')]"],
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('vmASCustomScriptFileName'), ' ', variables('AppDatabase'))]"
+                    }
+                },
+                "dependsOn": [
+                    "[resourceId('Microsoft.Compute/virtualMachines/', parameters('AppServer'))]"
+                ]
             }
+        ]
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2020-12-01",
-            "name": "[parameters('virtualMachines_appcontainerization_toolclient_name')]",
+            "name": "[parameters('AppContainerizationToolServer')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_appcontainerization_toolcl155_name'))]"
@@ -296,7 +311,7 @@
                     },
                     "osDisk": {
                         "osType": "Windows",
-                        "name": "[concat(parameters('virtualMachines_appcontainerization_toolclient_name'), '_OsDisk_1_f8ecd33591214460b39574be24c69583')]",
+                        "name": "[concat(parameters('AppContainerizationToolServer'), '_OsDisk_1_f8ecd33591214460b39574be24c69583')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -307,7 +322,7 @@
                     "dataDisks": [
                         {
                             "lun": 1,
-                            "name": "[concat(parameters('virtualMachines_appcontainerization_toolclient_name'), '_DataDisk_1')]",
+                            "name": "[concat(parameters('AppContainerizationToolServer'), '_DataDisk_1')]",
                             "createOption": "Empty",
                             "caching": "None",
                             "writeAcceleratorEnabled": false,
@@ -321,8 +336,8 @@
                 },
                 "osProfile": {
                     "computerName": "toolclient",
-                    "adminUsername": "toolclient",
-                    "adminPassword": "[parameters('osPassword')]",
+                    "adminUsername": "adminuser",
+                    "adminPassword": "[variables('osPassword')]",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true,
@@ -360,16 +375,13 @@
                     "typeHandlerVersion": "1.9",
                     "autoUpgradeMinorVersion": true,
                     "settings": {
-                    "fileUris": ["[variables('vmCustomScriptUri')]"],
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('vmCustomScriptFileName'))]"
+                    "fileUris": ["[variables('vmTCCustomScriptUri')]"],
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('vmTCCustomScriptFileName'))]"
                     }
                 },
                 "dependsOn": [
-                    "[resourceId('Microsoft.Compute/virtualMachines/', parameters('virtualMachines_appcontainerization_toolclient_name'))]"
-                ],
-                "tags": {
-                    "displayName": "SetupLabVm"
-                }
+                    "[resourceId('Microsoft.Compute/virtualMachines/', parameters('AppContainerizationToolServer'))]"
+                ]
             }
         ]
         },
@@ -427,9 +439,9 @@
         {
             "type": "Microsoft.Sql/servers/advisors",
             "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/ForceLastGoodPlan')]",
+            "name": "[concat(variables('AppDatabase'), '/ForceLastGoodPlan')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "properties": {
                 "autoExecuteValue": "Enabled"
@@ -438,10 +450,10 @@
         {
             "type": "Microsoft.Sql/servers/databases",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db')]",
+            "name": "[concat(variables('AppDatabase'), '/demo-db')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "sku": {
                 "name": "GP_Gen5",
@@ -463,9 +475,9 @@
         {
             "type": "Microsoft.Sql/servers/encryptionProtector",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/current')]",
+            "name": "[concat(variables('AppDatabase'), '/current')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "kind": "servicemanaged",
             "properties": {
@@ -477,9 +489,9 @@
         {
             "type": "Microsoft.Sql/servers/firewallRules",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/AllowAllWindowsAzureIps')]",
+            "name": "[concat(variables('AppDatabase'), '/AllowAllWindowsAzureIps')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "properties": {
                 "startIpAddress": "0.0.0.0",
@@ -489,9 +501,9 @@
         {
             "type": "Microsoft.Sql/servers/firewallRules",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/development')]",
+            "name": "[concat(variables('AppDatabase'), '/development')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "properties": {
                 "startIpAddress": "0.0.0.0",
@@ -531,10 +543,10 @@
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
             "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db/ForceLastGoodPlan')]",
+            "name": "[concat(variables('AppDatabase'), '/demo-db/ForceLastGoodPlan')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_appcontainerization_demo_name'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers/databases', variables('AppDatabase'), 'demo-db')]",
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "properties": {
                 "autoExecuteValue": "Enabled"
@@ -543,10 +555,10 @@
         {
             "type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
             "apiVersion": "2020-11-01-preview",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db/default')]",
+            "name": "[concat(variables('AppDatabase'), '/demo-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_appcontainerization_demo_name'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers/databases', variables('AppDatabase'), 'demo-db')]",
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "properties": {
                 "retentionDays": 7
@@ -555,11 +567,11 @@
         {
             "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
             "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_appcontainerization_demo_name'), '/demo-db/Default')]",
+            "name": "[concat(variables('AppDatabase'), '/demo-db/Default')]",
             "location": "[parameters('resourceLocation')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_appcontainerization_demo_name'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_appcontainerization_demo_name'))]"
+                "[resourceId('Microsoft.Sql/servers/databases', variables('AppDatabase'), 'demo-db')]",
+                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
             ],
             "properties": {
                 "state": "Enabled"

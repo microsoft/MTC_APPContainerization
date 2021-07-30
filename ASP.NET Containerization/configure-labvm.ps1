@@ -24,3 +24,17 @@ $msiArgs = @(
     "/L*v C:\edge-install-log.txt"
 )
 Start-Process msiexec.exe -ArgumentList $msiArgs -Wait -NoNewWindow
+
+# Set Trusted Hosts to access everything
+Set-Item WSMan:\localhost\Client\TrustedHosts -Value * -Force
+
+# Download and install MicrosoftWebDeployTool
+Invoke-WebRequest 'https://aka.ms/webdeploy3.6' -OutFile 'C:\MicrosoftWebDeploy.msi'
+$msiArgs = @(
+    "/i"
+    "C:\MicrosoftWebDeploy.msi"
+    "/qn"
+    "/norestart"
+    "/L*v C:\webdeploytool-install-log.txt"
+)
+Start-Process msiexec.exe -ArgumentList $msiArgs -Wait -NoNewWindow
