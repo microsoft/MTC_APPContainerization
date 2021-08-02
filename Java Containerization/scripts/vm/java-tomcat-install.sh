@@ -82,16 +82,6 @@ sudo chmod g+x conf
 # Make the tomcat user the owner of the Web apps, work, temp, and logs directories: 
 sudo chown -R tomcat9 webapps/ work/ temp/ logs/ bin/
 
-# reload the systemd daemon so that it knows about our service file
-sudo systemctl daemon-reload
-#sudo systemctl start tomcat9
-
-# Enable the service file so that Tomcat automatically starts at boot:
-sudo systemctl enable tomcat9
-
-
-
-
 echo "Installing Tomcat complete"
 echo ""
 echo ""
