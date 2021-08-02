@@ -27,9 +27,13 @@ sed -i "s%Environment=MYSQL_SERVER_ADMIN_LOGIN_NAME=%Environment=MYSQL_SERVER_AD
 sed -i "s%Environment=MYSQL_SERVER_ADMIN_PASSWORD=%Environment=MYSQL_SERVER_ADMIN_PASSWORD=$MYSQL_ADMIN_PASS%" /etc/systemd/system/tomcat9.service
 sed -i "s%Environment=MYSQL_DATABASE_NAME=%Environment=MYSQL_DATABASE_NAME=$MYSQL_DBNAME%" /etc/systemd/system/tomcat9.service
 sed -i "s%Environment=MYSQL_SERVER_FULL_NAME=%Environment=MYSQL_SERVER_FULL_NAME=$MYSQL_HOSTNAME%" /etc/systemd/system/tomcat9.service
-sed -i "s%-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dairsonic.home=/var%-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dairsonic.home=/var -DMYSQL_SERVER_FULL_NAME='$MYSQL_HOSTNAME' -DMYSQL_DATABASE_NAME='$MYSQL_DBNAME' -DMYSQL_SERVER_ADMIN_LOGIN_NAME='$MYSQL_ADMIN_USER' -DMYSQL_SERVER_ADMIN_PASSWORD='$MYSQL_ADMIN_PASS%" /etc/systemd/system/tomcat9.service
+sed -i "s%-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dairsonic.home=/var%-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dairsonic.home=/var -DMYSQL_SERVER_FULL_NAME=$MYSQL_HOSTNAME -DMYSQL_DATABASE_NAME=$MYSQL_DBNAME -DMYSQL_SERVER_ADMIN_LOGIN_NAME=$MYSQL_ADMIN_USER -DMYSQL_SERVER_ADMIN_PASSWORD=$MYSQL_ADMIN_PASS%" /etc/systemd/system/tomcat9.service
 
+# reload the systemd daemon so that it knows about our service file
+sudo systemctl daemon-reload
 
+echo "Starting tomcat"
+sudo systemctl start tomcat9
 
 
 
