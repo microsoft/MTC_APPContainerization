@@ -148,6 +148,14 @@
         "description": "MySQL client package"
       }
     },
+    "bastionHosts_bastion_name": {
+        "defaultValue": "bastion-host",
+        "type": "String"
+    },
+    "publicIPAddresses_appcontainerization_bastion_ip_name": {
+        "defaultValue": "appcontainerization-bastion-ip",
+        "type": "String"
+    },
     "_artifactsLocation": {
       "type": "string",
       "metadata": {
@@ -199,6 +207,22 @@
         "publicIPAllocationMethod": "Dynamic"
       }
     },
+    {
+        "type": "Microsoft.Network/publicIPAddresses",
+        "apiVersion": "2020-11-01",
+        "name": "[parameters('publicIPAddresses_appcontainerization_bastion_ip_name')]",
+        "location": "[parameters('location')]",
+        "sku": {
+            "name": "Standard",
+            "tier": "Regional"
+        },
+        "properties": {
+            "publicIPAddressVersion": "IPv4",
+            "publicIPAllocationMethod": "Static",
+            "idleTimeoutInMinutes": 4,
+            "ipTags": []
+        }
+    },   
     {
       "comments": "Default Network Security Group for template",
       "type": "Microsoft.Network/networkSecurityGroups",
@@ -272,6 +296,16 @@
                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
               }
             }
+          },
+          {
+              "name": "AzureBastionSubnet",
+              "properties": {
+                  "addressPrefix": "10.0.1.0/24",
+                  "serviceEndpoints": [],
+                  "delegations": [],
+                  "privateEndpointNetworkPolicies": "Enabled",
+                  "privateLinkServiceNetworkPolicies": "Enabled"
+              }
           }
         ]
       }
@@ -410,10 +444,40 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
             }
           ]
         }
+      }
+    },
+    {
+      "type": "Microsoft.Network/bastionHosts",
+      "apiVersion": "2020-11-01",
+      "name": "[parameters('bastionHosts_bastion_name')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+          "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_bastion_ip_name'))]",
+          "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
+      ],
+      "sku": {
+          "name": "Basic"
+      },
+      "properties": {
+          "dnsName": "[concat(parameters('bastionHosts_bastion_name'), '.azure.com')]",
+          "ipConfigurations": [
+              {
+                  "name": "IpConf",
+                  "properties": {
+                      "privateIPAllocationMethod": "Dynamic",
+                      "publicIPAddress": {
+                          "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_appcontainerization_bastion_ip_name'))]"
+                      },
+                      "subnet": {
+                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), 'AzureBastionSubnet')]"
+                      }
+                  }
+              }
+          ]
       }
     },
     {
@@ -487,7 +551,7 @@
             "startIpAddress": "0.0.0.0",
             "endIpAddress": "255.255.255.255"
         }
-    },
+     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'),'/installscript')]",
