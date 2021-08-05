@@ -8,7 +8,6 @@ Fully automated deployment via arm templates and custom scripts
 
 ### Port Notes:
 
-* Does not install Tomcat as a service
 * Does not configure transcoding, i.e. sudo snap install ffmpeg
 * Binding of airsonic app to mysql first requires the app be started to create a .properties file, stopped, then the .properties needs to be updated with jndi binding.  At the end of the airsonic install, the app is started then stopped to create this file using a 30 second wait period between operations.  The properties file is updated with binding during the mysql binding setup.
 
