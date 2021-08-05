@@ -1,0 +1,33 @@
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=network.target
+
+[Service]
+Type=forking
+
+
+Environment=MYSQL_SERVER_ADMIN_LOGIN_NAME=
+Environment=MYSQL_SERVER_ADMIN_PASSWORD=
+Environment=MYSQL_DATABASE_NAME=
+Environment=MYSQL_SERVER_FULL_NAME=
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+Environment=CATALINA_PID=/opt/tomcat9/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat9
+Environment=CATALINA_BASE=/opt/tomcat9
+Environment='CATALINA_OPTS=-Xms8192M -Xmx8192M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dairsonic.home=/var'
+
+ExecStart=/opt/tomcat9/bin/startup.sh
+ExecStop=/opt/tomcat9/bin/shutdown.sh
+
+User=tomcat9
+Group=tomcat9
+UMask=0007
+RestartSec=10
+Restart=always
+
+# dont do this until dir is created
+ReadWritePaths=/var/
+
+[Install]
+WantedBy=multi-user.target

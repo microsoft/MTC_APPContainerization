@@ -11,11 +11,30 @@
     "airsonicPackageName": {
       "value":"https://github.com/airsonic/airsonic/releases/download/v10.6.2/airsonic.war"
     },
-    "tomcatContext": {
-      "value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/context.xml"
-    },
     "mysqlDriverName": {
       "value":"https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.48.tar.gz"
+    },
+    "_artifactsLocation": {
+      "value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"
+    },
+    "tomcatServiceFile": {
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
+    },
+    "tomcatContext": {
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/webapp/context.xml"      
+      
+    },
+    "tomcatManagerContext": {
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/manager/context.xml"
+    },
+    "tomcatHostManagerContext": {
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/host-manager/context.xml"
+    },
+    "tomcatUsersFile": {
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/conf/tomcat-users.xml"
+    },
+    "tomcatServerConf": {
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/conf/server.xml"
     },
     "vmAdminUsername": {
       "value": "adminUser"
@@ -27,16 +46,13 @@
       "value": "mysqladmin"
     },
     "mysqlAdminPass": {
-      "value": "$uperS3kretPa$$w0rd"
+      "value": "SuperS3kretPasSw0rd"
     },
     "mysqlDBName": {
       "value": "airsonic"
     },
     "mysqlClientPackage": {
       "value": "mysql-client-core-5.7"
-    },
-    "_artifactsLocation": {
-      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"
     }
   }
 }
