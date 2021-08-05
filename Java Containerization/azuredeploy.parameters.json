@@ -53,7 +53,7 @@
       "value": "mysqladmin"
     },
     "mysqlAdminPass": {
-      "value": "$uperS3kretPa$$w0rd"
+      "value": "SuperS3kretPasSw0rd"
     },
     "mysqlDBName": {
       "value": "airsonic"

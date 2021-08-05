@@ -62,11 +62,6 @@
         "description": "tomcat host management file"
       }
     },
-
-
-
-
-
     "mysqlDriverName": {
       "type": "string",
       "metadata": {

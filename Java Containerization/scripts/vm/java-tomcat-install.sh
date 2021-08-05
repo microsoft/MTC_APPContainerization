@@ -37,6 +37,7 @@ sudo groupadd tomcat9
 
 # Create a new tomcat9 user 
 sudo useradd -s /bin/false -g tomcat9 -d /opt/tomcat9 tomcat9 
+usermod -aG sudo tomcat9
 
 # Download Apache Tomcat 
 cd /tmp 
