@@ -15,26 +15,26 @@
       "value":"https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.48.tar.gz"
     },
     "_artifactsLocation": {
-      "value":"https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/windowsToolsVM/Java%20Containerization/scripts/vm/"
+      "value":"https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/scripts/vm/"
     },
     "tomcatServiceFile": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/windowsToolsVM/Java%20Containerization/resource/tomcat/tomcat9.service"
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/tomcat9.service"
     },
     "tomcatContext": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/windowsToolsVM/Java%20Containerization/resource/tomcat/webapp/context.xml"      
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/webapp/context.xml"      
       
     },
     "tomcatManagerContext": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/windowsToolsVM/Java%20Containerization/resource/tomcat/manager/context.xml"
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/manager/context.xml"
     },
     "tomcatHostManagerContext": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/windowsToolsVM/Java%20Containerization/resource/tomcat/host-manager/context.xml"
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/host-manager/context.xml"
     },
     "tomcatUsersFile": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/windowsToolsVM/Java%20Containerization/resource/tomcat/conf/tomcat-users.xml"
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/conf/tomcat-users.xml"
     },
     "tomcatServerConf": {
-      "value": "https://raw.githubusercontent.com/Lantern-Cloud-Services/MTC_APPContainerization/windowsToolsVM/Java%20Containerization/resource/tomcat/conf/server.xml"
+      "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/conf/server.xml"
     },
     "vmAdminUsername": {
       "value": "adminUser"
