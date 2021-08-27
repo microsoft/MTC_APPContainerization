@@ -78,7 +78,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionStatic
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45
 
 # Download and unzip the sample app file
-Invoke-WebRequest 'https://willli4716.blob.core.windows.net/aspapp/appfiles.zip' -OutFile 'D:\appfile.zip'
+Invoke-WebRequest 'https://appcontainerizationlearn.blob.core.windows.net/appcontainerizationlearndotnet/appfiles.zip' -OutFile 'D:\appfile.zip'
 Expand-Archive -LiteralPath 'D:\appfile.zip' -DestinationPath D:\sitefiles
 
 # Update the database connection string
