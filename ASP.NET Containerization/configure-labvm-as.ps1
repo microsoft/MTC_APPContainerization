@@ -78,13 +78,13 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionStatic
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45
 
 # Download and unzip the sample app file
-Invoke-WebRequest 'https://appcontainerizationlearn.blob.core.windows.net/appcontainerizationlearndotnet/appfiles.zip' -OutFile 'D:\appfile.zip'
-Expand-Archive -LiteralPath 'D:\appfile.zip' -DestinationPath D:\sitefiles
+Invoke-WebRequest 'https://willli4716.blob.core.windows.net/aspapp/parts.zip' -OutFile 'D:\parts.zip'
+Expand-Archive -LiteralPath 'D:\parts.zip' -DestinationPath D:\parts
 
 # Update the database connection string
 $dbname = $args[0]
-((Get-Content -path D:\sitefiles\appfiles\Web.config -Raw) -replace 'RANDBNAME', $dbname) | Set-Content -Path D:\sitefiles\appfiles\Web.config
+((Get-Content -path D:\parts\parts\Web.config -Raw) -replace 'RANDBNAME', $dbname) | Set-Content -Path D:\parts\parts\Web.config
 
 # Delete default website and create the application pool and website
 Get-WebSite -Name "Default Web Site" | Remove-WebSite -Confirm:$false -Verbose
-new-WebSite -name "Demo" -Port 80 -PhysicalPath "D:\sitefiles\appfiles\" -Force
+new-WebSite -name "parts" -Port 80 -PhysicalPath "D:\parts\parts\" -Force

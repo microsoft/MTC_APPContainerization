@@ -205,7 +205,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_DS1_v2"
+                    "vmSize": "Standard_A8_v2"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -220,7 +220,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
+                            "storageAccountType": "Standard_LRS"
                         },
                         "diskSizeGB": 127
                     },
@@ -232,7 +232,7 @@
                             "caching": "None",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
-                                "storageAccountType": "Premium_LRS"
+                                "storageAccountType": "Standard_LRS"
                             },
                             "diskSizeGB": 16,
                             "toBeDetached": false
@@ -300,7 +300,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_DS1_v2"
+                    "vmSize": "Standard_A8_v2"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -315,7 +315,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
+                            "storageAccountType": "Standard_LRS"
                         },
                         "diskSizeGB": 127
                     },
@@ -327,7 +327,7 @@
                             "caching": "None",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
-                                "storageAccountType": "Premium_LRS"
+                                "storageAccountType": "Standard_LRS"
                             },
                             "diskSizeGB": 32,
                             "toBeDetached": false
@@ -448,31 +448,6 @@
             }
         },
         {
-            "type": "Microsoft.Sql/servers/databases",
-            "apiVersion": "2020-11-01-preview",
-            "name": "[concat(variables('AppDatabase'), '/demo-db')]",
-            "location": "[parameters('resourceLocation')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
-            ],
-            "sku": {
-                "name": "GP_Gen5",
-                "tier": "GeneralPurpose",
-                "family": "Gen5",
-                "capacity": 2
-            },
-            "kind": "v12.0,user,vcore",
-            "properties": {
-                "collation": "SQL_Latin1_General_CP1_CI_AS",
-                "maxSizeBytes": 34359738368,
-                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
-                "zoneRedundant": false,
-                "licenseType": "LicenseIncluded",
-                "readScale": "Disabled",
-                "requestedBackupStorageRedundancy": "Geo"
-            }
-        },
-        {
             "type": "Microsoft.Sql/servers/encryptionProtector",
             "apiVersion": "2020-11-01-preview",
             "name": "[concat(variables('AppDatabase'), '/current')]",
@@ -538,43 +513,6 @@
                         }
                     }
                 ]
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(variables('AppDatabase'), '/demo-db/ForceLastGoodPlan')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', variables('AppDatabase'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
-            "apiVersion": "2020-11-01-preview",
-            "name": "[concat(variables('AppDatabase'), '/demo-db/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', variables('AppDatabase'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
-            ],
-            "properties": {
-                "retentionDays": 7
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(variables('AppDatabase'), '/demo-db/Default')]",
-            "location": "[parameters('resourceLocation')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers/databases', variables('AppDatabase'), 'demo-db')]",
-                "[resourceId('Microsoft.Sql/servers', variables('AppDatabase'))]"
-            ],
-            "properties": {
-                "state": "Enabled"
             }
         },
         {
