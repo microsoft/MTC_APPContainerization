@@ -22,7 +22,6 @@
     },
     "tomcatContext": {
       "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/webapp/context.xml"      
-      
     },
     "tomcatManagerContext": {
       "value": "https://raw.githubusercontent.com/microsoft/MTC_APPContainerization/main/Java%20Containerization/resource/tomcat/manager/context.xml"

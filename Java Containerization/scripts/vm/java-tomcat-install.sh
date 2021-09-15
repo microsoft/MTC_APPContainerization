@@ -83,6 +83,9 @@ sudo chmod g+x conf
 # Make the tomcat user the owner of the Web apps, work, temp, and logs directories: 
 sudo chown -R tomcat9 webapps/ work/ temp/ logs/ bin/
 
+# add admin user to tomcat group
+usermod -g tomcat9 adminUser
+
 echo "Installing Tomcat complete"
 echo ""
 echo ""
